@@ -6,6 +6,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>공정 Trend</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>(function(){
+if(!window.Chart) return;
+var L2D={'#2563ab':'#60a5fa','rgba(37,99,171,0.05)':'rgba(96,165,250,0.07)','#dc2626':'#f87171','#16a34a':'#4ade80',
+ '#7c3aed':'#a78bfa','rgba(124,58,237,0.08)':'rgba(167,139,250,0.10)','#1a7a5e':'#34d399','#b91c1c':'#fb7185',
+ '#b45309':'#fbbf24','#9333ea':'#d8b4fe','rgba(185,28,28,0.5)':'rgba(251,113,133,0.6)','rgba(21,128,61,0.5)':'rgba(74,222,128,0.55)',
+ '#64748b':'#aab6c8','#e2e8f0':'#24324a'};
+var D2L={}; for(var k in L2D) D2L[L2D[k]]=k;
+function dark(){return document.documentElement.getAttribute('data-theme')==='dark';}
+function mp(v,m){ if(typeof v==='string') return m[v]||v; if(Array.isArray(v)) return v.map(function(x){return typeof x==='string'?(m[x]||x):x;}); return v; }
+function apply(ch){ try{ var m=dark()?L2D:D2L, c=ch.config, ds=(c.data&&c.data.datasets)||[];
+  ds.forEach(function(d){ ['borderColor','backgroundColor','pointBackgroundColor','pointBorderColor'].forEach(function(k){ if(k in d) d[k]=mp(d[k],m); }); });
+  var sc=(c.options&&c.options.scales)||{}; Object.keys(sc).forEach(function(a){ var x=sc[a];
+    if(x.ticks&&x.ticks.color) x.ticks.color=mp(x.ticks.color,m); if(x.grid&&x.grid.color) x.grid.color=mp(x.grid.color,m); });
+ }catch(e){} }
+var up=Chart.prototype.update; Chart.prototype.update=function(mode){ apply(this); return up.call(this,mode); };
+window.siteChartsRetheme=function(){ var all=Chart.instances||{}; Object.keys(all).forEach(function(i){ try{ all[i].update('none'); }catch(e){} }); };
+})();</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
@@ -146,11 +163,15 @@ body{font-family:'Malgun Gothic','맑은 고딕',sans-serif;background:#F0F2F5;c
 [data-theme="dark"] .tr-card.highlighted{background:#172554}
 [data-theme="dark"] .tr-num{background:#1e3a8a;color:#bfdbfe}
 [data-theme="dark"] .tr-name{color:#dbeafe}
-[data-theme="dark"] .tr-chip{background:#1f2937;border-color:#374151;color:#9ca3af}
+[data-theme="dark"] .tr-chip{background:#1f2937;border-color:#475569;color:#cbd5e1}
 [data-theme="dark"] .tr-chip-nom,[data-theme="dark"] .tr-ppk-ok{background:#052e16;border-color:#166534;color:#86efac}
 [data-theme="dark"] .tr-chip-lim,[data-theme="dark"] .tr-ppk-ng{background:#3f1515;border-color:#7f1d1d;color:#fca5a5}
 [data-theme="dark"] .tr-ppk-na{background:#1f2937;border-color:#374151;color:#9ca3af}
-[data-theme="dark"] .sc-wrap canvas,[data-theme="dark"] .tr-wrap canvas{filter:invert(0.92) hue-rotate(180deg)}
+[data-theme="dark"] .tr-name{color:#f1f5f9}
+[data-theme="dark"] .tr-chip[style*="#f5f3ff"]{background:#2e1065 !important;border-color:#7c3aed !important;color:#ddd6fe !important}
+[data-theme="dark"] .tr-chip[style*="#eff6ff"]{background:#172554 !important;border-color:#3b82f6 !important;color:#bfdbfe !important}
+[data-theme="dark"] .tr-chip[style*="#f3e8ff"]{background:#3b0764 !important;border-color:#a855f7 !important;color:#e9d5ff !important}
+[data-theme="dark"] .tr-chip{color:#cbd5e1}
 [data-theme="dark"] .col-scatter::-webkit-scrollbar-thumb{background:#1f5f4b}
 [data-theme="dark"] .col-trend::-webkit-scrollbar-thumb{background:#334155}
 </style>
@@ -163,7 +184,7 @@ body{font-family:'Malgun Gothic','맑은 고딕',sans-serif;background:#F0F2F5;c
   </div>
   <div class="header-right">
     <button class="theme-btn" id="themeBtn" onclick="siteToggleTheme()" title="흑/백 모드 전환">🌙</button>
-    <span class="update-time">2026-10-06 15:08 갱신</span>
+    <span class="update-time">2026-10-06 15:12 갱신</span>
     <button onclick="document.getElementById('noticeModal').style.display='flex'"
       title="버전 정보"
       style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:50%;width:28px;height:28px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;">📢</button>
@@ -1200,6 +1221,7 @@ window.addEventListener('load', initMarquee);
 </div>
 <script>
 function siteSetTheme(t){var r=document.documentElement;r.setAttribute('data-theme',t);try{localStorage.setItem('siteTheme',t);}catch(e){}
+  if(window.siteChartsRetheme) window.siteChartsRetheme();
   var b=document.getElementById('themeBtn');if(b){b.textContent=t==='dark'?'\u2600\ufe0f':'\ud83c\udf19';b.title=t==='dark'?'라이트 모드로':'다크 모드로';}}
 function siteToggleTheme(){siteSetTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');}
 (function(){var t=document.documentElement.getAttribute('data-theme')||'light';var b=document.getElementById('themeBtn');
