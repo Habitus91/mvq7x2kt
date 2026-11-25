@@ -192,6 +192,9 @@ body{font-family:'Noto Sans KR','Malgun Gothic','맑은 고딕',system-ui,sans-s
 .snav.on{background:#fff;color:#1e3a5f}
 .theme-btn{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:50%;width:28px;height:28px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;padding:0}
 .theme-btn:hover{background:rgba(255,255,255,0.12)}
+.screen-btn{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,0.4);border-radius:14px;height:28px;padding:0 12px;font-size:13px;font-weight:700;display:flex;align-items:center;white-space:nowrap}
+.screen-btn:hover{background:rgba(255,255,255,0.12)}
+.screen-btn:focus-visible{outline:2px solid #93c5fd;outline-offset:2px}
 [data-theme="dark"] .snav.on{background:#2563ab;color:#fff}
 </style>
 </head>
@@ -203,7 +206,7 @@ body{font-family:'Noto Sans KR','Malgun Gothic','맑은 고딕',system-ui,sans-s
   </div>
   <div class="header-right">
     <button class="theme-btn" id="themeBtn" onclick="siteToggleTheme()" title="흑/백 모드 전환">🌙</button>
-    <span class="update-time">2026-11-25 14:56 갱신</span>
+    <span class="update-time">2026-11-25 15:34 갱신</span>
     <button onclick="document.getElementById('noticeModal').style.display='flex'"
       title="버전 정보"
       style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:50%;width:28px;height:28px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;">📢</button>
